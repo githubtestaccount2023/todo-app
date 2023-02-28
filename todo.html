@@ -4,30 +4,67 @@
   </head>
   <body>
     <input id="todo-title" type="text" />
+    <input id="date-picker" type="date" />
     <button onclick="addTodo()">Add Todo</button>
 
     <div id="todo-list"></div>
 
     <script>
-      const todos = ['Get groceries', 'Wash car', 'Make dinner'];
+      const todos = [{
+        title: 'Get groceries',
+        dueDate: '2021-10-04',
+        id: 'id1'
+      }, {
+        title: 'Wash car',
+        dueDate: '2021-02-03',
+        id: 'id2'
+      }, {
+        title: 'Make dinner',
+        dueDate: '2021-03-04',
+        id: 'id3'
+      }];
 
       render();
 
       function addTodo() {
         const textbox = document.getElementById('todo-title');
         const title = textbox.value;
-        todos.push(title);
+
+        const datePicker = document.getElementById('date-picker');
+        const dueDate = datePicker.value;
+
+        const id = new Date().getTime();
+
+        todos.push({
+          title: title,
+          dueDate: dueDate,
+          id: id
+        });
 
         render();
+      }
+
+      function deleteTodo(event) {
+        const deleteButton = event.target;
+        const idToDelete = deleteButton.id;
+
       }
 
       function render() {
         // reset our list
         document.getElementById('todo-list').innerHTML = '';
 
-        todos.forEach(function (todoTitle) {
+        todos.forEach(function (todo) {
           const element = document.createElement('div');
-          element.innerText = todoTitle;
+          element.innerText = todo.title + ' ' + todo.dueDate;
+
+          const deleteButton = document.createElement('button');
+          deleteButton.innerText = 'Delete';
+          deleteButton.style = 'margin-left: 12px';
+          deleteButton.onclick = deleteTodo;
+          deleteButton.id = todo.id;
+          element.appendChild(deleteButton);
+
           const todoList = document.getElementById('todo-list');
           todoList.appendChild(element);
         });
@@ -35,6 +72,21 @@
     </script>
   </body>
 </html>
+
+<!--Javascript Objects
+Objects group different values that are related This is what a object group looks like:
+let todo={
+    title: 'Get groceries',
+    dueDate: '2023-28-02'
+  }
+The syntax of an object is that you start and end with a curly brace and everything inside is part of the object
+Each value is given a label. In this case, "title" and "dueDate" are labels. These labels are called property-value pairs (also called key-value pairs) and these pairs are separated by a comma
+
+Having property-value pairs lets us access specific values within the object
+
+For example, if we wanted just the title of this todo we could just do "todo.tile" and just get the title. If we wanted  the due date we could do todo.dueDate and get just get the due date -->
+
+
 
 
 
